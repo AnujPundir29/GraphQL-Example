@@ -14,7 +14,7 @@ const schema = buildSchema(`
 `);
 
 const root = {
-    description: () => "This is a description",
+    description: () => "Red Shoes",
     price: () => 100.00
 };
 
@@ -22,7 +22,10 @@ const app = express();
 
 app.use('/graphql', graphqlHTTP({
     schema: schema,
-    rootValue: root
+    rootValue: root,
+    graphiql: true
 }));
 
-app.listen(3000, () => Console.log("Listen GraphQL at 3000...."));
+app.listen(3000, () => {
+    console.log("Listen GraphQL at 3000....")
+});
