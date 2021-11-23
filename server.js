@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const {
     buildSchema
 } = require("graphql");
@@ -8,37 +9,23 @@ const {
 const {
     makeExecutableSchema
 } = require("@graphql-tools/schema");
+const {
+    loadFilesSync
+} = require("@graphql-tools/load-files");
 
 // '!' for mandatory
 
+const typesArray = loadFilesSync(path.join(__dirname,'**/*.graphql'));
+
 const schema = makeExecutableSchema({
-    typeDefs: [schemaText]
+    typeDefs: typesArray 
 })
 
 // const schema = buildSchema();
 
 const root = {
-    products: [{
-        id: 'RedShoe',
-        description: 'Red Shoe',
-        reviews: [{
-            comment: 'Nice Shoes',
-            rating: 4
-        }],
-        price: 1300.44
-    }],
-    orders: [{
-        date: '24-11-2021',
-        subtotal: 1300.44,
-        items: [{
-            product: {
-                id: 'RedShoe',
-                description: 'Red Shoe',
-                price: 1300.44
-            },
-            quantity: 1
-        }]
-    }]
+    products: require('./products/products.model'),
+    orders: require('./orders/orders.model'),    
 };
 
 const app = express();
