@@ -5,33 +5,17 @@ const {
 const {
     graphqlHTTP
 } = require("express-graphql");
+const {
+    makeExecutableSchema
+} = require("@graphql-tools/schema");
 
 // '!' for mandatory
-const schema = buildSchema(`
-    type Query {
-        products: [Product]
-        orders: [Order]
-    }
-    type Product { 
-        id: ID!
-        description: String!   
-        reviews: [Review]
-        price: Float!
-    }
-    type Review {
-        comment: String
-        rating: Int!
-    }
-    type Order{
-        date: String!
-        subtotal: Float! 
-        items: [OrderItem]
-    }
-    type OrderItem{
-        product: Product!
-        quantity: Int!
-    }
-`);
+
+const schema = makeExecutableSchema({
+    typeDefs: [schemaText]
+})
+
+// const schema = buildSchema();
 
 const root = {
     products: [{
