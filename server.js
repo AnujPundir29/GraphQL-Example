@@ -16,10 +16,12 @@ const {
 // '!' for mandatory
 
 const typesArray = loadFilesSync(path.join(__dirname,'**/*.graphql'));
+const resolversArray = loadFilesSync(path.join(__dirname,'**/*.resolvers*'));
 
 const schema = makeExecutableSchema({
-    typeDefs: typesArray 
-})
+    typeDefs: typesArray,
+    resolvers: resolversArray
+});
 
 // const schema = buildSchema();
 
@@ -32,7 +34,6 @@ const app = express();
 
 app.use('/graphql', graphqlHTTP({
     schema: schema,
-    rootValue: root,
     graphiql: true
 }));
 
