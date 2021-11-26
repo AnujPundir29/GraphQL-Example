@@ -24,8 +24,37 @@ function getProductById(id) {
     })
 }
 
+function addNewProduct(id, description, price) {
+    const newProduct = {
+        id,
+        description,
+        price,
+        reviews: []
+    };
+
+    products.push(newProduct);
+    return newProduct;
+}
+
+function addNewProductReview(id, comment, rating) {
+
+    const matchedProduct = getProductById(id);
+
+    if (matchedProduct) {
+        const newProductReview = {
+            comment,
+            rating
+        };
+
+        matchedProduct.reviews.push(newProductReview);
+        return newProductReview;
+    }
+}
+
 module.exports = {
     getAllProducts,
     getProductsByPrice,
-    getProductById
+    getProductById,
+    addNewProduct,
+    addNewProductReview
 }
